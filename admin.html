@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm to kitchen</title>
+    <link rel="icon" type="image/x-icon" href="Designer1.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:wght@300;400&display=swap"
+        rel="stylesheet">
+</head>
+<style>
+    .head{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 2rem 1rem 0.75rem 1rem;
+    }
+</style>
+
+<body>
+    <div class="navbar">
+        <div class="title">
+            <img src="Designer1.png" alt="">
+            <div class="text"><span>Farm</span>से<span>Kitchen</span></div>
+        </div>
+    </div>
+    <h1 class="head">ADMIN PANEL</h1>
+
+    <div class="tile-container">
+        <div class="tiles blue" onclick="dashboard()">
+            <img src="https://cdn-icons-png.flaticon.com/128/7580/7580393.png" alt="">
+            Open Dashboard
+        </div>
+        <div class="tiles green">
+            <img src="https://cdn-icons-png.flaticon.com/128/10251/10251439.png" alt="">
+            Go to Website
+        </div>
+
+        <div class="tiles green" onclick="manage()">
+            <img src="https://cdn-icons-png.flaticon.com/128/7235/7235503.png" alt="">
+
+            Add Groceries
+        </div>
+        <div class="tiles pink" onclick="manage()">
+            <img src="https://cdn-icons-png.flaticon.com/128/6722/6722996.png" alt="">
+            Delete Groceries
+        </div>
+        <div class="tiles yellow" onclick="manage()">
+            <img src="https://cdn-icons-png.flaticon.com/128/8343/8343403.png" alt="">
+            Edit Groceries
+        </div>
+    </div>
+
+
+
+    <footer class="footer">
+        <div class="bottom-navigation">
+            <div class="bottom-menu-item" onclick="dashboard()">
+                <img width="50" height="50" src="https://cdn-icons-png.flaticon.com/128/1828/1828765.png" alt="home" />
+                <div class="bottom-menu-text">Dashboard</div>
+            </div>
+            <div class="bottom-menu-item " onclick="home()">
+                <img width="50" height="50" src="https://cdn-icons-png.flaticon.com/128/1946/1946488.png" alt="loto">
+                <div class="bottom-menu-text active">Home</div>
+            </div>
+            <div class="bottom-menu-item" onclick="manage()">
+                <img width="50" height="50" src="https://cdn-icons-png.flaticon.com/128/3524/3524752.png"
+                    alt="wallet" />
+                <div class="bottom-menu-text">Manage</div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <script>
+        function home() {
+            window.location.href = "admin.html";
+        }
+        function dashboard() {
+            window.location.href = "dashboard.html";
+        }
+        function manage() {
+            window.location.href = "manage.html";
+        }
+
+    </script>
+</body>
+
+</html>

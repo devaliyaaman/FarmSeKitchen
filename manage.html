@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm to kitchen</title>
+    <link rel="icon" type="image/x-icon" href="Designer1.png">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:wght@300;400&display=swap"
+        rel="stylesheet">
+</head>
+<style>
+</style>
+
+<body>
+    <div class="navbar">
+        <div class="title">
+            <img src="Designer1.png" alt="">
+            <div class="text"><span>Farm</span>से<span>Kitchen</span></div>
+        </div>
+    </div>
+
+
+
+    <div id="myForm" class="form">
+        <input type="text" name="" id="name" placeholder="Grocery Name">
+        <input type="number" name="" id="price" placeholder="Grocery Price">
+        <input type="text" name="image" id="image" placeholder="Image Link">
+        <button class="btn" id="addBtn" onclick="addVegetable()">Add Grocery</button>
+        <button class="btn" id="editBtn" style="display: none;">Edit Grocery</button>
+    </div>
+
+
+    <div class="head">AVAILABLE GROCERIES</div>
+    <div class="container" id="container">
+        <!-- <div class="card">
+            <div class="product-image d-flex">
+                <img src="./public/images/CARROT (2).jpeg" alt="">
+            </div>
+
+            <div class="product-description d-flex">
+                <div class="product-name">Brinjal</div>
+                <div class="product-price">₹50/kg</div>
+            </div>
+
+            <div class="add-to-card">
+                <div class="img"><img src="https://cdn-icons-png.flaticon.com/128/2356/2356780.png" alt=""></div>
+                <div class="img"><img src="https://cdn-icons-png.flaticon.com/128/3405/3405244.png" alt=""></div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="product-image d-flex">
+                <img src="./public/images/CARROT (2).jpeg" alt="">
+            </div>
+
+            <div class="product-description d-flex">
+                <div class="product-name">Brinjal</div>
+                <div class="product-price">₹50/kg</div>
+            </div>
+
+            <div class="add-to-card">
+                <div class="img"><img src="https://cdn-icons-png.flaticon.com/128/2356/2356780.png" alt=""></div>
+                <div class="img"><img src="https://cdn-icons-png.flaticon.com/128/3405/3405244.png" alt=""></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="product-image d-flex">
+                <img src="./public/images/CARROT (2).jpeg" alt="">
+            </div>
+
+            <div class="product-description d-flex">
+                <div class="product-name">Brinjal</div>
+                <div class="product-price">₹50/kg</div>
+            </div>
+
+            <div class="add-to-card">
+                <div class="img"><img src="https://cdn-icons-png.flaticon.com/128/2356/2356780.png" alt=""></div>
+                <div class="img"><img src="https://cdn-icons-png.flaticon.com/128/3405/3405244.png" alt=""></div>
+            </div>
+        </div> -->
+
+    </div>
+    <footer>
+        <div class="bottom-navigation">
+            <div class="bottom-menu-item" onclick="dashboard()">
+                <img width="50" height="50" src="https://cdn-icons-png.flaticon.com/128/1828/1828765.png" alt="home" />
+                <div class="bottom-menu-text">Dashboard</div>
+            </div>
+            <div class="bottom-menu-item " onclick="home()">
+                <img width="50" height="50" src="https://cdn-icons-png.flaticon.com/128/1946/1946488.png" alt="loto">
+                <div class="bottom-menu-text">Home</div>
+            </div>
+            <div class="bottom-menu-item" onclick="manage()">
+                <img width="50" height="50" src="https://cdn-icons-png.flaticon.com/128/3524/3524752.png"
+                    alt="wallet" />
+                <div class="bottom-menu-text active">Manage</div>
+            </div>
+        </div>
+    </footer>
+   
+
+   
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <!-- <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js"></script> -->
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyClOaEdMo3QhN4Z5lZxyZJmHM8f5uJbe8A",
+            authDomain: "farmsekitchen-a123.firebaseapp.com",
+            projectId: "farmsekitchen-a123",
+            storageBucket: "farmsekitchen-a123.appspot.com",
+            messagingSenderId: "687491431693",
+            appId: "1:687491431693:web:64cc83955b6d771790c444",
+            measurementId: "G-GR29BF7Y1N",
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        async function addVegetable() {
+            const name = document.getElementById('name').value;
+            const price = document.getElementById('price').value;
+            const imageLink = document.getElementById('image').value;
+
+            const result = await Swal.fire({
+                title: 'Are you sure?',
+                text: "You are about to add this vegetable.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, add it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            });
+
+            if (result.isConfirmed) {
+                try {
+                    await db.collection('Groceries').add({
+                        name: name,
+                        price: price,
+                        imageLink: imageLink
+                    });
+                    showVegetables();
+                    console.log("Document added successfully!");
+                    Swal.fire('Added!', 'Your vegetable has been added.', 'success');
+                } catch (error) {
+                    console.error("Error adding document: ", error);
+                    Swal.fire('Error!', 'There was an error adding the vegetable.', 'error');
+                }
+            }
+            document.getElementById('name').value = "";
+            document.getElementById('price').value = "";
+            document.getElementById('image').value = "";
+        }
+        async function showVegetables() {
+            try {
+                const snapshot = await db.collection('Groceries').get();
+                const container = document.getElementById('container');
+                container.innerHTML = "";
+
+                snapshot.forEach(doc => {
+                    // doc = doc.data();
+                    container.innerHTML += `<div class="card" id="${doc.id}">
+                                <div class="product-image d-flex">
+                                    <img id="img${doc.id}" src=${doc.data().imageLink} alt="">
+                                </div>
+
+                                <div class="product-description d-flex">
+                                    <div class="product-name" id="name${doc.id}">${doc.data().name}</div>
+                                    <div class="product-price" >₹ <span id="price${doc.id}">${doc.data().price}</span>/kg</div>
+                                </div>
+
+                                <div class="add-to-card">
+                                    <div class="img" onclick="editTab('${doc.id}')"><img src="https://cdn-icons-png.flaticon.com/128/2356/2356780.png" alt=""></div>
+                                    <div class="img" onclick="deleteVeg('${doc.id}')"><img src="https://cdn-icons-png.flaticon.com/128/3405/3405244.png" alt=""></div>
+                                </div>
+                            </div>`;
+                });
+            } catch (error) {
+                console.error("Error getting documents: ", error);
+            }
+        }
+        showVegetables();
+
+
+        function editTab(id) {
+            document.getElementById('addBtn').style.display = 'none';
+            document.getElementById('editBtn').style.display = 'flex';
+
+            document.getElementById('name').value = document.getElementById('name' + id).innerText;
+            document.getElementById('price').value = document.getElementById('price' + id).innerText;
+            document.getElementById('image').value = document.getElementById('img' + id).src;
+
+            document.getElementById('editBtn').addEventListener('click', function () {
+                editVeg(id);
+            })
+
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth' // Smooth scrolling animation
+            });
+        }
+        async function editVeg(docId) {
+            const name = document.getElementById('name').value;
+            const price = document.getElementById('price').value;
+            const imageLink = document.getElementById('image').value;
+
+            const result = await Swal.fire({
+                title: 'Are you sure?',
+                text: "You are about to edit this vegetable.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, edit it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            });
+
+            if (result.isConfirmed) {
+                const newData = { name: name, price: price, imageLink: imageLink };
+                try {
+                    await db.collection('Groceries').doc(docId).update(newData);
+                    console.log("Document edited successfully!");
+                    showVegetables();
+                    Swal.fire('Edited!', 'Your vegetable has been edited.', 'success');
+                } catch (error) {
+                    console.error("Error editing document: ", error);
+                    Swal.fire('Error!', 'There was an error editing the vegetable.', 'error');
+                }
+
+                document.getElementById('addBtn').style.display = 'flex';
+                document.getElementById('editBtn').style.display = 'none';
+
+                document.getElementById('name').value = "";
+                document.getElementById('price').value = "";
+                document.getElementById('image').value = "";
+            }
+        }
+
+        async function deleteVeg(docId) {
+            const result = await Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, keep it',
+                reverseButtons: true
+            });
+
+            if (result.isConfirmed) {
+                try {
+                    await db.collection('Groceries').doc(docId).delete();
+                    console.log("Document deleted successfully!");
+                    document.getElementById(docId).remove();
+                    Swal.fire('Deleted!', 'Your vegetable has been deleted.', 'success');
+                } catch (error) {
+                    console.error("Error deleting document: ", error);
+                    Swal.fire('Error!', 'There was an error deleting the vegetable.', 'error');
+                }
+            }
+        }
+
+        //     document.getElementById('myForm').addEventListener('submit', async (e) => {
+        //         e.preventDefault();
+
+        //         const name = document.getElementById('name').value;
+        //         const price = document.getElementById('price').value;
+        //         const image = document.getElementById('image').files[0];
+
+        //         // Create a FormData object to send data and image
+        //         const formData = new FormData();
+        //         formData.append('name', name);
+        //         formData.append('price', price);
+        //         formData.append('image', image);
+
+        //         try {
+        //             const response = await fetch('/api/upload', {
+        //                 method: 'POST',
+        //                 body: formData,
+        //             });
+
+        //             if (response.ok) {
+        //                 console.log('Data and image uploaded successfully');
+        //             } else {
+        //                 console.error('Error uploading data and image');
+        //             }
+        //         } catch (error) {
+        //             console.error('Network error:', error);
+        //         }
+        //     });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <script>
+        function home() {
+            window.location.href = "admin.html";
+        }
+        function dashboard() {
+            window.location.href = "dashboard.html";
+        }
+        function manage() {
+            window.location.href = "manage.html";
+        }
+
+    </script>
+</body>
+
+</html>

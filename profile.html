@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm to kitchen</title>
+    <link rel="icon" type="image/x-icon" href="Designer1.png">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.css" />
+
+</head>
+
+<style>
+    .profile {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem 1rem;
+        gap: 1rem;
+
+        .details{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        img {
+            width: 60%;
+        }
+    }
+
+    .actions{
+        display: grid;
+        padding: 1rem;
+        gap: 0.5rem;
+
+        .action{
+            border: 1px solid black;
+            box-shadow: 0 0 2px 2px #00000035;
+            border-radius: 12px;
+            padding: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+</style>
+
+<body>
+    <div class="navbar">
+        <div class="title">
+            <img src="Designer1.png" alt="">
+            <div class="text"><span>Farm</span>से<span>Kitchen</span></div>
+        </div>
+    </div>
+    <div class="profile">
+        <img src="https://cdn-icons-png.flaticon.com/128/1144/1144760.png"></img>
+        <div class="details">
+            <h1>Username</h1>
+            <h3>+91 969172 xxxx</h3>
+            <h3>xyzop@gmail.com</h3>
+        </div>
+    </div>
+    <div class="actions">
+        <div class="action">My Orders</div>
+        <div class="action">My Wishlist</div>
+        <div class="action">Sign out</div>
+
+    </div>
+
+
+    <!-- Go to top button  -->
+    <a href="#carouselExampleAutoplaying" class="up-arrow" id="backToTop">
+        <img src="https://cdn-icons-png.flaticon.com/128/5610/5610930.png" style="max-width: 2rem;" alt="">
+    </a>
+
+    <!-- <footer>
+        <div>© made by devaliyaaman</div>
+    </footer> -->
+
+    <div class="footer">
+        <div class="bottom-navigation">
+            <div class="bottom-menu-item " onclick="goToHome()">
+                <img width="50" height="50" src="https://cdn-icons-png.flaticon.com/128/1946/1946488.png" alt="loto">
+                <div class="bottom-menu-text">Home</div>
+            </div>
+            <div class="bottom-menu-item" onclick="goToShop()">
+                <img width="50" height="50" src="https://cdn-icons-png.flaticon.com/128/126/126122.png" alt="home" />
+                <div class="bottom-menu-text ">Shop</div>
+            </div>
+            <div class="bottom-menu-item" onclick="goToCart()">
+                <img width="50" height="50" src="https://cdn-icons-png.flaticon.com/128/3144/3144456.png" alt="home" />
+                <div class="bottom-menu-text ">Cart</div>
+            </div>
+            <div class="bottom-menu-item" onclick="goToProfile()">
+                <img width="50" height="50" src="https://cdn-icons-png.flaticon.com/128/1077/1077063.png"
+                    alt="wallet" />
+                <div class="bottom-menu-text active">Profile</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+        </script>
+    <!-- <script src="script.js"></script> -->
+    <script>
+        function goToHome() {
+            window.location.href = 'index.html';
+        }
+        function goToShop() {
+            window.location.href = 'shop.html';
+        }
+        function goToCart() {
+            window.location.href = 'cart.html';
+        }
+        function goToProfile() {
+            window.location.href = 'profile.html';
+        }
+    </script>
+</body>
+
+</html>

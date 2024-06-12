@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm to kitchen</title>
+    <link rel="icon" type="image/x-icon" href="Designer1.png">
+    <link rel="stylesheet" href="styles.css">
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.css" />
+
+</head>
+
+<style>
+</style>
+
+<body>
+    <div class="navbar">
+        <div class="title">
+            <img src="Designer1.png" alt="">
+            <div class="text"><span>Farm</span>से<span>Kitchen</span></div>
+        </div>
+    </div>
+
+
+    <!-- Go to top button  -->
+    <a href="#carouselExampleAutoplaying" class="up-arrow" id="backToTop">
+        <img src="https://cdn-icons-png.flaticon.com/128/5610/5610930.png" style="max-width: 2rem;" alt="">
+    </a>
+
+    <!-- Shopping Section  -->
+    <div>
+        <div class="head">
+            SHOP FRESH VEGETABLES
+        </div>
+        <div class="shop" id="shop">
+            <!-- <div class="card d-flex">
+                <div class="product-image d-flex">
+                    <img src="./public/images/BRINJAL (2).jpeg" alt="">
+                </div>
+
+                <div class="product-description d-flex">
+                    <div class="product-name">Brinjal</div>
+                    <div class="product-price">₹50/kg</div>
+                </div>
+
+                <div class="add-to-card">
+                    <button type="reset" class="btn btn-outline-success">Add to Cart</button>
+                </div>
+            </div> -->
+        </div>
+    </div>
+    <!-- <footer>
+        <div>© made by devaliyaaman</div>
+    </footer> -->
+
+    <div class="footer">
+        <div class="bottom-navigation">
+            <div class="bottom-menu-item " onclick="goToHome()">
+                <img width="50" height="50" src="https://cdn-icons-png.flaticon.com/128/1946/1946488.png" alt="loto">
+                <div class="bottom-menu-text">Home</div>
+            </div>
+            <div class="bottom-menu-item" onclick="goToShop()">
+                <img width="50" height="50" src="https://cdn-icons-png.flaticon.com/128/126/126122.png" alt="home" />
+                <div class="bottom-menu-text active">Shop</div>
+            </div>
+            <div class="bottom-menu-item" onclick="goToCart()">
+                <img width="50" height="50" src="https://cdn-icons-png.flaticon.com/128/3144/3144456.png" alt="home" />
+                <div class="bottom-menu-text">Cart</div>
+            </div>
+            <div class="bottom-menu-item" onclick="goToProfile()">
+                <img width="50" height="50" src="https://cdn-icons-png.flaticon.com/128/1077/1077063.png"
+                    alt="wallet" />
+                <div class="bottom-menu-text">Profile</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+        </script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.js"></script>
+    <!-- <script src="./public/javascript/script.js"></script> -->
+    <script>
+        // #Firebase Configurations 
+        const firebaseConfig = {
+            apiKey: "AIzaSyClOaEdMo3QhN4Z5lZxyZJmHM8f5uJbe8A",
+            authDomain: "farmsekitchen-a123.firebaseapp.com",
+            projectId: "farmsekitchen-a123",
+            storageBucket: "farmsekitchen-a123.appspot.com",
+            messagingSenderId: "687491431693",
+            appId: "1:687491431693:web:64cc83955b6d771790c444",
+            measurementId: "G-GR29BF7Y1N",
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const cart = JSON.parse(localStorage.getItem('groceryCart')) || {};
+
+        // #get Groceries functions
+        async function showVegetables() {
+            try {
+                const snapshot = await db.collection('Groceries').get();
+                const container = document.getElementById('shop');
+                container.innerHTML = "";
+
+                snapshot.forEach(doc => {
+                    // doc = doc.data();
+                    container.innerHTML += `<div class="card" id="${doc.id}">
+                                <div class="product-image d-flex">
+                                    <img id="img${doc.id}" src=${doc.data().imageLink} alt="">
+                                </div>
+
+                                <div class="product-description d-flex">
+                                    <div class="product-name" id="name${doc.id}">${doc.data().name}</div>
+                                    <div class="product-price" >₹ <span id="price${doc.id}">${doc.data().price}</span>/kg</div>
+                                </div>
+
+                                <div class="add-to-card" id="add-to-cart-${doc.id}">
+                                    <button class="btn btn-success" onclick="addToCart('${doc.id}', '${doc.data().name}', '${doc.data().price}', '${doc.data().imageLink}')">Add to Cart</button>
+                                </div>
+                                <div id="quantity-controller-${doc.id}" style="display: none;">
+                                    <div class="quantity-controller">
+                                        <button class=" btn btn-left" onclick="removeFromCart('${doc.id}')">-</button>
+                                        <div class="quantity"><div id="quantity-${doc.id}">1 </div> Kg</div>
+                                        <button class="btn btn-right" onclick="addToCart('${doc.id}', '${doc.data().name}', '${doc.data().price}', '${doc.data().imageLink}')">+</button>
+                                    </div>
+                                </div>
+                            </div>`;
+
+                    if (cart[doc.id]) {
+                        let id = doc.id;
+                        document.getElementById(`add-to-cart-${id}`).style.display = 'none';
+                        document.getElementById(`quantity-controller-${id}`).style.display = 'flex';
+                        document.getElementById(`quantity-${id}`).innerText = cart[id].quantity;
+                    }
+                });
+            } catch (error) {
+                console.error("Error getting documents: ", error);
+            }
+        }
+        showVegetables();
+
+        // Function to add vegetable to local storage cart
+        function addToCart(id, name, price, imageLink) {
+            if (cart[id]) {
+                cart[id].quantity += 1;
+                document.getElementById(`quantity-${id}`).innerText = cart[id].quantity;
+            } else {
+                cart[id] = { name, price, imageLink, quantity: 1 };
+            }
+            document.getElementById(`add-to-cart-${id}`).style.display = 'none';
+            document.getElementById(`quantity-controller-${id}`).style.display = 'flex';
+            document.getElementById(`quantity-${id}`).innerText = cart[id].quantity;
+            localStorage.setItem('groceryCart', JSON.stringify(cart));
+            Toastify({
+                text: "Added to Cart",
+                duration: 3000,
+                backgroundColor: "#4CAF50",
+            }).showToast();
+            console.log(cart);
+        }
+
+        // Remove from Cart function
+        function removeFromCart(id) {
+            if (cart[id]) {
+                cart[id].quantity -= 1;
+                if (cart[id].quantity <= 0) {
+                    delete cart[id];
+                    document.getElementById(`add-to-cart-${id}`).style.display = 'flex';
+                    document.getElementById(`quantity-controller-${id}`).style.display = 'none';
+                } else {
+                    document.getElementById(`quantity-${id}`).innerText = cart[id].quantity;
+                }
+                localStorage.setItem('groceryCart', JSON.stringify(cart));
+                Toastify({
+                    text: "Removed from Cart",
+                    duration: 3000,
+                    backgroundColor: "#FF0000",
+                }).showToast();
+            }
+            console.log(cart);
+        }
+
+        // #navigation functions 
+        function goToHome() {
+            window.location.href = 'index.html';
+        }
+        function goToShop() {
+            window.location.href = 'shop.html';
+        }
+        function goToCart() {
+            window.location.href = 'cart.html';
+        }
+        function goToProfile() {
+            window.location.href = 'profile.html';
+        }
+    </script>
+</body>
+
+</html>

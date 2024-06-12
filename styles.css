@@ -1,0 +1,386 @@
+html,
+body {
+    margin: 0;
+    padding: 2rem 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: #f0f0f0;
+}
+
+.navbar {
+    position: fixed !important;
+    top: 0;
+    right: 0;
+    left: 0;
+    background-color: #fff;
+    box-shadow: 0 0 10px #00000039;
+    z-index: 1000000;
+
+    .title {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        gap: 0.5rem;
+        font-size: 1.5rem;
+        padding: 0.5rem 1rem;
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+        font-style: normal;
+
+        img {
+            max-width: 2rem;
+            cursor: pointer;
+        }
+    }
+
+    .cart {
+        padding-right: 1rem;
+
+        img {
+            max-width: 2rem;
+            cursor: pointer;
+        }
+    }
+}
+
+.modal {
+    border-radius: 15px;
+    margin-top: 5rem;
+    box-shadow: 0 4px 8px rgba(13, 9, 9, 0.1);
+}
+
+.item {
+    /* border-top: 0.2px solid grey; */
+    border-bottom: 0.1px solid grey;
+    padding: 0.3rem;
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr;
+    gap: auto;
+}
+
+.quantity,
+.price {
+    text-align: center;
+    justify-content: center;
+}
+
+.empty-cart {
+    /* min-height: 20vh; */
+    padding: 3rem 1rem;
+    margin: 1rem;
+    color: blue;
+    font-style: italic;
+    background-color: rgb(213, 212, 211);
+    justify-content: center;
+    text-align: center;
+    border-radius: 15px;
+}
+
+.up-arrow {
+    position: fixed;
+    bottom: 8px;
+    right: 8px;
+    opacity: 0.5;
+    z-index: 1;
+    transition: bottom 0.3s ease-in-out;
+}
+
+#backToTop:hover,
+#backToTop:focus {
+    opacity: 1;
+}
+
+/* Show the button when it's focused or hovered */
+#backToTop:focus,
+#backToTop:hover {
+    bottom: 8px;
+    /* Display at the bottom of the page */
+}
+
+
+
+.carousel {
+    max-height: 30vh;
+    overflow: hidden;
+}
+
+
+
+
+/* ###Shopping### */
+.head {
+    padding: 1rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: green;
+    text-align: center;
+}
+
+.shop {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0 1rem 1rem 1rem;
+    gap: 1rem;
+    z-index: 5;
+
+    .card {
+        padding: 1rem;
+        display: flex;
+        border-radius: 15px;
+        box-shadow: 0 0 3px #00000046;
+
+
+        .product-image {
+            border: 0.5px solid grey;
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: #a0a0a03c;
+        }
+
+        .product-image img {
+            width: 10.5rem;
+            height: 7rem;
+            margin: auto;
+            border-radius: 12px;
+            background-color: #a0a0a03c;
+
+        }
+
+        .product-description {
+            justify-content: center;
+            flex-direction: column;
+            text-align: left;
+
+            .product-name {
+                font-size: 1.2rem;
+                font-weight: 400;
+            }
+
+            .product-price {
+                font-size: 1.25rem;
+                font-weight: bold;
+            }
+        }
+
+        .add-to-card {
+            display: flex;
+            justify-content: space-between;
+            text-align: center;
+
+            padding-top: 0.5rem;
+
+            .btn {
+                width: 100%;
+                border-radius: 8px;
+                font-size: 1.2rem;
+            }
+        }
+    }
+}
+
+.quantity-controller {
+    /* border: 1px solid black; */
+    margin-top: 0.5rem;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    font-size: 1rem;
+    border-radius: 7px;
+    /* border: 1px solid #0000004b; */
+    box-shadow: 0 0 2px 1px #00000037;
+
+
+    .btn{
+        background-color: #017c4f;
+        color: #FFF;
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+    .btn-left{
+        background-color: #017c4f !important;
+        color: #FFF;
+        font-size: 1.2rem;
+        font-weight: bold;
+        border-radius: 8px 0 0 8px;
+        border: none;
+    }
+    .btn-right{
+        background-color: #017c4f !important;
+        color: #FFF;
+        font-size: 1.2rem;
+        font-weight: bold;
+        border-radius: 0 8px 8px 0;
+        border: none;
+    }
+    .quantity{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem ;
+        font-weight: bold;
+    }
+}
+
+.red-strip {
+    padding: 0.5rem;
+    background-color: rgb(2, 181, 2);
+    color: #FFF;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+/* About  */
+.about {
+    color: #367c2b;
+    /* background-color: #32de84; */
+    justify-content: center;
+    text-align: center;
+    margin: 0;
+    padding: 2rem 4rem;
+    /* padding-bottom: 8rem; */
+    /* margin-bottom: 0px; */
+}
+
+h1,
+h2,
+h3 {
+    color: #367c2b;
+}
+
+.about h1 {
+    color: #004953;
+    font-weight: bold;
+    /* margin: 2rem; */
+    padding: 1rem;
+}
+
+#more {
+    display: none;
+}
+
+#myBtn {
+    cursor: pointer;
+    color: #06f970;
+}
+
+
+/* Designing Contact Us form */
+.contact {
+    display: flex;
+    margin: auto;
+    padding: 0%;
+}
+
+.contactfrm {
+    padding: 2rem;
+    padding-top: 0%;
+    font-family: 'PT Serif', serif;
+}
+
+.contactfrm h1 {
+    text-align: center;
+    /* font-size: 1.25rem; */
+}
+
+.contactfrm p {
+    /* font-size: 2rem; */
+    text-align: center;
+}
+
+.form {
+    background-color: #d5f7e4;
+    color: #008000;
+    /* font-family: 'Kaushan Script', cursive; */
+    border: 0.5px solid gainsboro;
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    /* padding-bottom: 5rem; */
+}
+
+.form h2 {
+    font-weight: bold;
+    padding-bottom: 1rem;
+    text-align: center;
+    /* font-size: 4rem; */
+}
+
+.message {
+    margin-bottom: 1rem;
+}
+
+.fc {
+    /* margin: 0.25rem 0; */
+    background-color: gray;
+}
+
+
+/* Designing Map part */
+.map {
+    font-family: 'PT Serif', serif;
+    width: 100%;
+    /* height: 255px; */
+    margin: 0%;
+    padding: 0.5rem 0;
+    text-align: center;
+    border: 1px solid whitesmoke;
+}
+
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    z-index: 10000 !important;
+
+    .bottom-navigation {
+        display: flex;
+        padding: 0 1.75rem;
+        justify-content: center;
+        justify-content: space-between;
+        box-shadow: 0 0 8px -2px #00000037;
+        /* border: 1px solid black; */
+
+
+        .bottom-menu-item {
+            display: flex;
+            cursor: pointer !important;
+            flex-direction: column;
+            gap: 2px;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            /* border: 1px solid black; */
+
+
+            .bottom-menu-text {
+                justify-content: center;
+                font-size: 0.8rem;
+                text-align: center;
+                font-family: "Plus Jakarta Sans";
+            }
+
+        }
+
+        .bottom-menu-item img {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+    }
+}
+
+.active {
+    border-bottom: 2px solid black;
+}
+
+/* 
+footer {
+    margin: 0px;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 1rem;
+    background: linear-gradient(-60deg, rgb(20, 36, 50) 11.8%, rgb(44, 74, 101) 51.8%, rgb(94, 110, 125) 83.8%);
+} */

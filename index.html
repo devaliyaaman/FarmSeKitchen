@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm to kitchen</title>
+    <link rel="icon" type="image/x-icon" href="Designer1.png">
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.css" />
+
+</head>
+
+<style>
+</style>
+
+<body>
+    <div class="navbar">
+        <div class="title">
+            <img src="Designer1.png" alt="">
+            <div class="text"><span>Farm</span>से<span>Kitchen</span></div>
+        </div>
+        <div class="cart">
+            <img src="https://cdn-icons-png.flaticon.com/128/1144/1144760.png" data-bs-toggle="modal"
+                data-bs-target="#loginModal" alt="cart"></img>
+        </div>
+        <button onclick="goToAdmin()" id="gotoAdminButton" style="display: none;">go to admin</button>
+        <button type="button" class="btn btn-primary" id="cartButton" style="display:none" data-bs-toggle="modal"
+            data-bs-target="#cartModal"></button>
+    </div>
+
+    <!-- //Login Modal -->
+    <div class="modal" tabindex="-1" id="loginModal" style="padding: 1rem;">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><b>Login</b></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="login-form">
+                        <div class="mb-3">
+                            <label for="loginEmail" class="form-label">User Id</label>
+                            <input type="text" class="form-control" id="userId">
+                        </div>
+                        <div class="mb-3">
+                            <label for="loginPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="loginPassword">
+                        </div>
+                        <button id="loginBtn" class="btn btn-primary">Admin Login</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Modal
+    <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Your Cart Items</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="item" style="color: rgb(245, 27, 111);">
+                        <div class="name">Items</div>
+                        <div class="quantity">Qty(KG)</div>
+                        <div class="price">Price(₹)</div>
+                    </div>
+                    <div class="cart-items" id="cartItems">
+
+                    </div>
+                    <div class="item">
+                        <div class="name" style="color: rgb(245, 27, 111);">Total Price</div>
+                        <div class="quantity" style="color: rgb(14, 142, 4);"> ₹ </div>
+                        <div class="price" id="totalPriceOfCart" style="color: rgb(121, 27, 245);">999</div>
+                    </div>
+                </div>
+                <div class=" modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Add items</button>
+                    <button type="button" class="btn btn-outline-primary" onclick="placeOrder()">Place Order</button>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- Carousel -->
+    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://2.bp.blogspot.com/-eLx5DsaQBUw/V7-t4bKYXrI/AAAAAAAAAAk/C4EJf_8AX4I3ueWynepFeuq1DK8FCm-OACLcB/s1600/veg1.jpg"
+                    class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="https://img.freepik.com/premium-photo/indian-farmer-working-green-pigeon-peas-field-with-bullock_54391-6543.jpg?size=626&ext=jpg"
+                    class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="https://img.freepik.com/free-photo/woman-cooking-kitchen_1303-12912.jpg" class="d-block w-100"
+                    alt="...">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+
+
+    <!-- Toast for adding cart item  -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-body">
+                Item added to Cart.
+            </div>
+        </div>
+    </div>
+
+    <div class="head">
+        SHOP FRESH VEGETABLES
+    </div>
+    <div class="shop" id="shop">
+        <!-- <div class="card d-flex">
+            <div class="product-image d-flex">
+                <img src="../public/images/Beetroot.webp (2).jpeg" alt="">
+            </div>
+
+            <div class="product-description d-flex">
+                <div class="product-name">Brinjal</div>
+                <div class="product-price">₹50/kg</div>
+            </div>
+
+            <div class="add-to-card">
+                <button type="reset" class="btn btn-outline-success">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="card d-flex">
+            <div class="product-image d-flex">
+                <img src="./public/images/Beetroot.webp" alt="">
+            </div>
+            <div class="product-description d-flex">
+                <div class="product-name">Beetroot</div>
+                <div class="product-price">₹60/kg</div>
+            </div>
+            <div class="add-to-card">
+                <button class="btn btn-outline-success">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="card d-flex">
+            <div class="product-image d-flex">
+                <img src="./public/images/BRINJAL.jpeg" alt="">
+            </div>
+            <div class="product-description d-flex">
+                <div class="product-name">Brinjal</div>
+                <div class="product-price">₹30/kg</div>
+            </div>
+            <div class="add-to-card">
+                <button class="btn btn-outline-success">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="card d-flex">
+            <div class="product-image d-flex">
+                <img src="./public/images/CARROT (2).jpeg" alt="">
+            </div>
+            <div class="product-description d-flex">
+                <div class="product-name">Carrot</div>
+                <div class="product-price">₹70/kg</div>
+            </div>
+            <div class="add-to-card">
+                <button class="btn btn-outline-success">Add to Cart</button>
+            </div>
+        </div> -->
+    </div>
+    <div class="red-strip" onclick="goToShop()">Click To View More Groceries</div>
+
+    <!-- ABout Farm to kitchen  -->
+    <div class="about flex" id="about">
+        <h1>About Farm To Kitchen</h1>
+        <p>The concept of farm to kitchen is to bridge the gap between farmers and consumers. Our aim is to deliver the
+            farm produce to the customer as quickly as possible, fresh and at a low price. <span
+                id="dots">...</span><span id="more">You are seeing the condition of the farmers. His family depends on
+                agriculture. Today, agricultural produce has become very expensive, but it does not benefit either the
+                farmer or the consumer. We all together will buy the goods of the farmers and we all will take their
+                benefits along with the farmers. Let's help each other, let's  stick together.</span></p>
+
+        <a onclick="myFunction()" id="myBtn">Read more</a>
+    </div>
+
+    <!-- Map  -->
+    <div class="map">
+        <h2>Your Location</h2>
+        <div id="map" style="width: 100%; height: 250px;"></div>
+    </div>
+
+    <!-- Contact form  -->
+    <div class="contact" id="contact">
+        <div class="contactfrm">
+            <div style="padding: 1rem 0rem;">
+                <h1>
+                    <bold>Contact Us</bold>
+                </h1>
+                <p>
+                    123, Jabalpur Engineering College, Jabalpur, 482011,
+                    India
+                </p>
+                <p>farmtoKitchen379@gmail.com</p>
+                <p>+91 84710 79104</p>
+            </div>
+            <div class="form">
+                <h2>Get in Touch</h2>
+                <form class="row g-3">
+                    <div class="col-md-6">
+                        <label for="inputFirstName" class="form-label">
+                            First Name
+                        </label>
+                        <input type="text" class="form-control fc" id="firstName"></input>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputLastName" class="form-label">
+                            Last Name
+                        </label>
+                        <input type="text" class="form-control fc" id="lastName"></input>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputEmail4" class="form-label">
+                            Email *
+                        </label>
+                        <input type="email" class="form-control fc" id="inputEmail4" required></input>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputPhone" class="form-label">
+                            Phone
+                        </label>
+                        <input type="number" class="form-control fc " id="inputPhone"></input>
+                    </div>
+                    <div class="col-md-12 message">
+                        <label for="inputMessage" class="form-label">
+                            Message
+                        </label>
+                        <input type="text" class="form-control fc" id="inputMessage" placeholder=""></input>
+                    </div>
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-success col-md-12">
+                            Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Go to top button  -->
+    <a href="#carouselExampleAutoplaying" class="up-arrow" id="backToTop">
+        <img src="https://cdn-icons-png.flaticon.com/128/5610/5610930.png" style="max-width: 2rem;" alt="">
+    </a>
+    <div class="footer">
+        <div class="bottom-navigation">
+            <div class="bottom-menu-item " onclick="goToHome()">
+                <img width="50" height="50" src="https://cdn-icons-png.flaticon.com/128/1946/1946488.png" alt="loto">
+                <div class="bottom-menu-text active">Home</div>
+            </div>
+            <div class="bottom-menu-item" onclick="goToShop()">
+                <img width="50" height="50" src="https://cdn-icons-png.flaticon.com/128/126/126122.png" alt="home" />
+                <div class="bottom-menu-text">Shop</div>
+            </div>
+            <div class="bottom-menu-item" onclick="goToCart()">
+                <img width="50" height="50" src="https://cdn-icons-png.flaticon.com/128/3144/3144456.png" alt="home" />
+                <div class="bottom-menu-text">Cart</div>
+            </div>
+            <div class="bottom-menu-item" onclick="goToProfile()">
+                <img width="50" height="50" src="https://cdn-icons-png.flaticon.com/128/1077/1077063.png"
+                    alt="wallet" />
+                <div class="bottom-menu-text">Profile</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <footer>
+        <div>© made by devaliyaaman</div>
+    </footer> -->
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+        </script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.js"
+        integrity="sha512-MnKz2SbnWiXJ/e0lSfSzjaz9JjJXQNb2iykcZkEY2WOzgJIWVqJBFIIPidlCjak0iTH2bt2u1fHQ4pvKvBYy6Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- <script src="./public/javascript/script.js"></script> -->
+    <script>
+        // #Firebase Configurations 
+        const firebaseConfig = {
+            apiKey: "AIzaSyClOaEdMo3QhN4Z5lZxyZJmHM8f5uJbe8A",
+            authDomain: "farmsekitchen-a123.firebaseapp.com",
+            projectId: "farmsekitchen-a123",
+            storageBucket: "farmsekitchen-a123.appspot.com",
+            messagingSenderId: "687491431693",
+            appId: "1:687491431693:web:64cc83955b6d771790c444",
+            measurementId: "G-GR29BF7Y1N",
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const auth = firebase.auth();
+
+        // Login
+        document.getElementById('loginBtn').addEventListener('click', async () => {
+            const email = document.getElementById('userId').value;
+            const password = document.getElementById('loginPassword').value;
+            if (email.length == 0 || password.length == 0) {
+                Toastify({
+                    text: "Enter UserId and Password first",
+                    duration: 3000,
+                    backgroundColor: "#4CAF50",
+                }).showToast();
+            }
+            else {
+                try {
+                    const userCredential = await auth.signInWithEmailAndPassword(email, password);
+                    if (userCredential != null) {
+                        window.location.href = 'admin.html';
+                    }
+                } catch (error) {
+                    if (error.message) {
+                        Toastify({
+                            text: "Invalid UserId or Password",
+                            duration: 3000,
+                            backgroundColor: "red",
+                        }).showToast();
+                    }
+                }
+            }
+        });
+
+
+        // #get Groceries functions
+        async function showVegetables() {
+            try {
+                const snapshot = await db.collection('Groceries').get();
+                const container = document.getElementById('shop');
+                container.innerHTML = "";
+
+                const limit = 4; // Set your desired limit here
+                let count = 0;
+                snapshot.forEach(doc => {
+                    // doc = doc.data();
+                    if (count < limit) {
+                        container.innerHTML += `<div class="card" id="${doc.id}">
+                                <div class="product-image d-flex">
+                                    <img id="img${doc.id}" src=${doc.data().imageLink} alt="">
+                                </div>
+
+                                <div class="product-description d-flex">
+                                    <div class="product-name" id="name${doc.id}">${doc.data().name}</div>
+                                    <div class="product-price" >₹ <span id="price${doc.id}">${doc.data().price}</span>/kg</div>
+                                </div>
+
+                                <div class="add-to-card">
+                                    <button type="reset" class="btn btn-outline-success" onclick="goToShop()">Add to Cart</button>
+                                </div>
+                            </div>`;
+                        count++;
+                    }
+                    else {
+                        return;
+                    }
+                });
+            } catch (error) {
+                console.error("Error getting documents: ", error);
+            }
+        }
+        showVegetables();
+
+        //about function
+        function myFunction() {
+            var dots = document.getElementById("dots");
+            var moreText = document.getElementById("more");
+            var btnText = document.getElementById("myBtn");
+
+            if (dots.style.display === "none") {
+                dots.style.display = "inline";
+                btnText.innerHTML = "Read more";
+                moreText.style.display = "none";
+            } else {
+                dots.style.display = "none";
+                btnText.innerHTML = "Read less";
+                moreText.style.display = "inline";
+            }
+        }
+
+        // #Map FUnctions
+        function initMap() {
+            // Default map center (can be any location)
+            const defaultLocation = { lat: 23.1927396, lng: 77.3045048 };
+
+            // Create a new map
+            const map = new google.maps.Map(document.getElementById("map"), {
+                center: defaultLocation,
+                zoom: 10,
+            });
+
+            // Try HTML5 geolocation
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const pos = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude,
+                        };
+                        map.setCenter(pos);
+
+                        // Add a marker at the user's location
+                        new google.maps.Marker({
+                            position: pos,
+                            map: map,
+                            title: "Your Location",
+                        });
+                    },
+                    () => {
+                        handleLocationError(true, map.getCenter());
+                    }
+                );
+            } else {
+                // Browser doesn't support Geolocation
+                handleLocationError(false, map.getCenter());
+            }
+        }
+
+        function handleLocationError(browserHasGeolocation, pos) {
+            const infoWindow = new google.maps.InfoWindow();
+            infoWindow.setPosition(pos);
+            infoWindow.setContent(
+                browserHasGeolocation
+                    ? "Error: The Geolocation service failed."
+                    : "Error: Your browser doesn't support geolocation."
+            );
+            infoWindow.open(map);
+        }
+
+        // #Navigation Functions
+        function goToHome() {
+            window.location.href = 'index.html';
+        }
+        function goToShop() {
+            window.location.href = 'shop.html';
+        }
+        function goToCart() {
+            window.location.href = 'cart.html';
+        }
+        function goToProfile() {
+            window.location.href = 'profile.html';
+        }
+        // function login() {
+        // window.location.href = 'admin.html';
+        // }
+    </script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSon1qM9sp3EyAzfrnDYP51n8LZ8JCQO4&callback=initMap"></script>
+</body>
+
+</html>

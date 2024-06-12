@@ -200,7 +200,7 @@ body {
     .btn-left{
         background-color: #017c4f !important;
         color: #FFF;
-        font-size: 1.2rem;
+        font-size: 1rem;
         font-weight: bold;
         border-radius: 8px 0 0 8px;
         border: none;
@@ -208,7 +208,7 @@ body {
     .btn-right{
         background-color: #017c4f !important;
         color: #FFF;
-        font-size: 1.2rem;
+        font-size: 1rem;
         font-weight: bold;
         border-radius: 0 8px 8px 0;
         border: none;
@@ -217,7 +217,7 @@ body {
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.2rem ;
+        font-size: 1.1rem ;
         font-weight: bold;
     }
 }

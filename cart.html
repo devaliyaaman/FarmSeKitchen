@@ -119,6 +119,7 @@
     <div class="cart-total" id="total-cont">
         Cart Total <div class="total">₹<span id="cartTotal">00</span></div>
     </div>
+    <input type="text" class="address placeBtn" id="addressInput" style="border: none;background-color: #fff;margin-bottom: 2rem;" placeholder="Enter Delivery location"></input>
     <button class="placeBtn" id="placeBtn" onclick="placeOrder()">Place Order Now</button>
 
     <div class="footer">
@@ -226,45 +227,57 @@
 
 
         async function placeOrder() {
-            // Show SweetAlert confirmation
-            const result = await Swal.fire({
-                title: 'Are you sure?',
-                text: "Do you want to place this order?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, place order!'
-            });
+            const address = document.getElementById("addressInput").value;
+            if (address.length === 0) {
+                Toastify({
+                    text: "Please enter an delivery address",
+                    duration: 1000,
+                    backgroundColor: "#FF0000",
+                }).showToast();
+                return;
+            }
+            else {
+                // Show SweetAlert confirmation
+                const result = await Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Do you want to place this order?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, place order!'
+                });
 
-            if (result.isConfirmed) {
-                // Construct the message with cart items
-                var message = "Cart Items:\n";
-                let index = 1;
+                if (result.isConfirmed) {
+                    // Construct the message with cart items
+                    var message = "Cart Items:\n";
+                    let index = 1;
 
-                for (const id in cart) {
-                    if (cart.hasOwnProperty(id)) {
-                        const item = cart[id];
-                        const itemName = item.name;
-                        const itemPrice = item.price;
-                        const itemQuantity = item.quantity;
-                        message += `${index}. ${itemName}  ${itemQuantity}Kg - ₹${itemQuantity * itemPrice}\n`;
-                        index++;
+                    for (const id in cart) {
+                        if (cart.hasOwnProperty(id)) {
+                            const item = cart[id];
+                            const itemName = item.name;
+                            const itemPrice = item.price;
+                            const itemQuantity = item.quantity;
+                            message += `${index}. ${itemName}  ${itemQuantity}Kg - ₹${itemQuantity * itemPrice}\n`;
+                            index++;
+                        }
                     }
+                    message += "Total Price is : ₹ " + cartTotal + "\n\n";
+                    message += "Address : " + address + "\n";
+
+                    // WhatsApp number to send the message
+                    var whatsappNumber = "+917974603337"; // Replace with the actual WhatsApp number
+
+                    // Construct the WhatsApp URL
+                    var whatsappUrl =
+                        "https://wa.me/" + whatsappNumber + "?text=" + encodeURIComponent(message);
+
+                    // Open the WhatsApp URL in a new tab
+                    window.open(whatsappUrl, "_blank");
+                    localStorage.removeItem('groceryCart');
+                    goToHome();
                 }
-                message += "Total Price is : ₹ " + cartTotal;
-
-                // WhatsApp number to send the message
-                var whatsappNumber = "+917974603337"; // Replace with the actual WhatsApp number
-
-                // Construct the WhatsApp URL
-                var whatsappUrl =
-                    "https://wa.me/" + whatsappNumber + "?text=" + encodeURIComponent(message);
-
-                // Open the WhatsApp URL in a new tab
-                window.open(whatsappUrl, "_blank");
-                localStorage.removeItem('groceryCart');
-                goToHome();
             }
         }
 
